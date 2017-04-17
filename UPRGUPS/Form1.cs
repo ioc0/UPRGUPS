@@ -13,6 +13,7 @@ namespace UPRGUPS
 {
     public partial class Form1 : Form
     {
+        private string pathToUp = "";
         public Form1()
         {
             InitializeComponent();
@@ -32,11 +33,17 @@ namespace UPRGUPS
             this.Width = 800;
             this.Height = 600;
             treeView1.SetBounds(8, 72, 312, 264);
+            
+
+        }
+
+        private void OpenXmlFile()
+        {
             try
             {
                 // SECTION 1. Create a DOM Document and load the XML data into it.
                 XmlDocument dom = new XmlDocument();
-                dom.Load(textBox1.Text);
+                dom.Load(pathToUp);
 
                 // SECTION 2. Initialize the TreeView control.
                 treeView1.Nodes.Clear();
@@ -56,7 +63,6 @@ namespace UPRGUPS
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private void buttonClick(object sender, EventArgs e)
@@ -94,10 +100,25 @@ namespace UPRGUPS
 
         private void clickOnNode(object sender, TreeNodeMouseClickEventArgs e)
         {
-            //MessageBox.Show(sender.ToString());
+            MessageBox.Show(e.Node.Name.ToString());
         }
 
         private void clickOnItem(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void tsmiOpen_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                pathToUp = ofd.FileName;
+                //MessageBox.Show(pathToUp);
+            }
+            OpenXmlFile();
+        }
+
+        private void doubleClickOnNode(object sender, EventArgs e)
         {
             MessageBox.Show(sender.ToString());
         }
